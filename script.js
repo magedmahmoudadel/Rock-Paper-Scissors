@@ -1,4 +1,4 @@
-function computerPlay(){
+function computerPlay(){ //Generates a random computer play.
     let randomNumber= Math.floor(((Math.random()*3)+1));
     if(randomNumber===1){
         return 'rock'
@@ -12,8 +12,9 @@ function computerPlay(){
 }
 
 
-function playRound(playerSelection,computerSelection){
+function playRound(playerSelection,computerSelection){ // Plays a round and determines the winner.
     playerSelection=playerSelection.toLowerCase();
+    console.log(playerSelection);
     if (playerSelection===computerSelection){
         console.log("It's a tie!");
         return 0;
@@ -40,19 +41,26 @@ function playRound(playerSelection,computerSelection){
     }
 }
 
-function game(){
+function game(){ // Plays the game and determines the overall winner based on score.
     let score = 0;
-    for(let i=0;i<5;i++){
-        const player=prompt("Rock, Paper, Scissors");
+
+    for (let i = 0; i<5; i++){
         const computer = computerPlay();
-        let play = playRound(player,computer);
-        if(play){
-            score+=1;
-            console.log(score);
-        }else{
-            console.log(score);
-        }
+        console.log(computer);
+        const rock = document.querySelector('#rock');
+        const paper = document.querySelector('#paper');
+        const scissors = document.querySelector('#scissors');
+        rock.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
+        paper.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
+        scissors.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
     }
+    if(play){
+        score+=1;
+        console.log(score);
+    }else{
+        console.log(score);
+    }
+        
     if (score>=3){
         console.log('You won the game!')
     }else{
