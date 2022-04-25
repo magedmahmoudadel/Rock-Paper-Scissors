@@ -1,0 +1,26 @@
+body{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    width:100vh;
+}
+
+.players{
+    display:flex;
+    justify-content:space-around;
+}
+
+.buttons{
+    display:flex;
+    justify-content:space-around;
+
+}
+
+
+.results{
+    text-align:center;
+}
