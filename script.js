@@ -1,72 +1,98 @@
+const result = document.querySelector('.result');
+const pScore = document.querySelector('.player-score');
+const cScore = document.querySelector('.computer-score');
+let playerScore = 0;
+let computerScore = 0;
+
+
+
+
 function computerPlay(){ //Generates a random computer play.
     let randomNumber= Math.floor(((Math.random()*3)+1));
     if(randomNumber===1){
         return 'rock'
     } else if (randomNumber===2){
-        return 'paper'
+        return 'paper'  
     } else if (randomNumber===3){
         return 'scissors'
-    } else{
-        console.log('Invalid number')
     }
 }
 
 
 function playRound(playerSelection,computerSelection){ // Plays a round and determines the winner.
+    
     playerSelection=playerSelection.toLowerCase();
-    console.log(playerSelection);
     if (playerSelection===computerSelection){
-        console.log("It's a tie!");
+        result.textContent=("It's a tie!");
         return 0;
     }else if (playerSelection==='rock'&&computerSelection==='paper'){
-        console.log('You Lose! Paper beats Rock');
+        result.textContent=('You Lose! Paper beats Rock');
+        computerScore++;
         return 0;
+        
     }else if (playerSelection==='rock'&&computerSelection==='scissors'){
-        console.log('You Win! Rock beats Scissors');
-        return 1;
+        result.textContent=('You Win! Rock beats Scissors');
+        playerScore++;
+        return;
+        
     }else if (playerSelection==='paper'&&computerSelection==='rock'){
-        console.log('You Win! Paper beats Rock');
-        return 1;
+        result.textContent=('You Win! Paper beats Rock');
+        playerScore++;
+        return;
+        
     }else if (playerSelection==='paper'&&computerSelection==='scissors'){
-        console.log('You Lose! Scissors beats Paper');
-        return 0;
+        result.textContent=('You Lose! Scissors beats Paper');
+        computerScore++;
+        return;
+        
     }else if (playerSelection==='scissors'&&computerSelection==='paper'){
-        console.log('You Win! Scissors beats Paper');
-        return 1;
+        result.textContent=('You Win! Scissors beats Paper');
+        playerScore++;
+        return;
+        
     }else if (playerSelection==='scissors'&&computerSelection==='rock'){
-        console.log('You Lose! Rock beats Scissors');
-        return 0;
-    }else{
-        console.log('Invalid input');
+        result.textContent=('You Lose! Rock beats Scissors');
+        computerScore++;
+        return;
+        
     }
 }
 
-function game(){ // Plays the game and determines the overall winner based on score.
-    let score = 0;
+function resetGame(){
+    playerScore=0;
+    pScore.textContent=0;
+    computerScore=0;
+    cScore.textContent=0;
+    result.textContent='Result';
+    result.style.color= 'black';
+}
 
-    for (let i = 0; i<5; i++){
-        const computer = computerPlay();
-        console.log(computer);
-        const rock = document.querySelector('#rock');
-        const paper = document.querySelector('#paper');
-        const scissors = document.querySelector('#scissors');
-        rock.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
-        paper.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
-        scissors.addEventListener('click', (e)=>{playRound(e.target.id,computer)});
-    }
-    if(play){
-        score+=1;
-        console.log(score);
-    }else{
-        console.log(score);
-    }
-        
-    if (score>=3){
-        console.log('You won the game!')
-    }else{
-        console.log('You lost. Better luck next time!')
-    }
-    
+function game(){ // Plays the game and determines the overall winner based on score.
+  
+    const buttons = document.querySelectorAll('.btn');
+    const reset = document.querySelector('.reset');
+    reset.addEventListener('click', ()=>{resetGame()});
+    buttons.forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+            const computer = computerPlay();
+            
+
+            playRound(e.target.id,computer);
+            pScore.textContent=playerScore;
+            cScore.textContent=computerScore;
+
+            if (playerScore===5){
+                result.textContent= 'You Won the Game!';
+                result.style.color='red';
+            } else if (computerScore===5){
+                result.textContent= 'You Lost! Better Luck Next Time';
+                result.style.color='red';               
+            }
+
+        })
+    }) 
+
+  
 }
 
 game();
